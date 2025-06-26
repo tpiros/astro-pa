@@ -1,16 +1,63 @@
 ---
-
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+<h1 class="text-5xl font-bold m-2">Welcome</h1>
+<p class="m-2">
+  This sample project shows how to use the{' '}
+  <a
+    class="underline text-blue-500 hover:bg-blue-200 rounded-full"
+    href="https://astro.cloudinary.dev" target="_blank" rel="noopener noreferrer"
+    >
+    Cloudinary Astro SDK
+  </a>.
+</p>
+<div class="p-2">
+  The following pieces of functionality are exposed in this app:
+  <ul class="list-disc list-inside">
+    <li>
+      <a
+        class="underline text-blue-500 hover:bg-blue-200 rounded-full"
+        href="/uw"
+      >
+        Upload (Upload Widget)
+      </a>
+      : shows an example implementation of the{' '}
+      <a
+        class="underline text-blue-500 hover:bg-blue-200 rounded-full"
+        href="https://cloudinary.com/documentation/upload_widget" target="_blank" rel="noopener noreferrer"
+      >
+        Upload Widget
+      </a>
+      .
+    </li>
+    <li>
+      <a
+        class="underline text-blue-500 hover:bg-blue-200 rounded-full"
+        href="/server-action-upload"
+      >
+        Server-Side Upload 
+      </a>
+      : shows an example of how to use the{' '}
+      <a
+        class="underline text-blue-500 hover:bg-blue-200 rounded-full"
+        href="https://cloudinary.com/documentation/image_upload_api_reference" target="_blank" rel="noopener noreferrer"
+      >
+        Upload API
+      </a>
+      via server-side code (like API Routes) in Astro.
+    </li>
+    <li>
+      <a
+        class="underline text-blue-500 hover:bg-blue-200 rounded-full"
+        href="/album"
+      >
+        Photo Album
+      </a>
+      : shows how to display images from a Cloudinary product environment.
+    </li>
+  </ul>
+</div>
+</Layout>

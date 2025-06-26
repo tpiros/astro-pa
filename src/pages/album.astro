@@ -1,0 +1,69 @@
+---
+import cloudinary from '../../utils/cloudinary'
+import Layout from '../../layouts/Layout.astro';
+import type { ResourceApiOptions } from 'cloudinary';
+import type { ResourceApiResponse } from 'cloudinary';
+import { CldImage } from 'astro-cloudinary';
+
+const tag = import.meta.env.CLOUDINARY_TAG;
+let photos: any[] = [];
+if (tag) {
+  const response = await cloudinary.api.resources_by_tag(tag);
+  photos = response.resources || [];
+}
+---
+<Layout>
+  <div class="m-2 space-y-4">
+    <h1 class="text-5xl font-bold">Photo Album</h1>
+    <p class="m-2">
+      This page shows how to display images uploaded to your Cloudinary
+      account.
+    </p>
+    <div class="m-2">
+      Please note that the following defaults are being used:
+      <ul class="list-disc list-inside">
+        <li>
+          Images tagged as
+          <code class="bg-black text-gray-100 px-2 py-1 rounded-md text-sm">
+            myphotoalbum-astro
+          </code>
+          are displayed.
+        </li>
+        <li>
+          Images are transformed using the following transformations:
+          <code class="bg-black text-gray-100 px-2 py-1 rounded-md text-sm whitespace-normal overflow-auto break-words">
+            width=400
+          </code>,
+          <code class="bg-black text-gray-100 px-2 py-1 rounded-md text-sm whitespace-normal overflow-auto break-words">
+            height=400
+          </code> and
+          <code class="bg-black text-gray-100 px-2 py-1 rounded-md text-sm whitespace-normal overflow-auto break-words">
+            crop=limit
+          </code>.
+        </li>
+        <li>
+          Please note that Cloudinary automatically applies both
+          <code class="bg-black text-gray-100 px-2 py-1 rounded-md text-sm">f_auto</code>
+          and
+          <code class="bg-black text-gray-100 px-2 py-1 rounded-md text-sm">q_auto</code>
+          to the images.
+        </li>
+      </ul>
+    </div>
+
+    {photos.length > 0 ? (
+      <div class="flex flex-wrap -mx-4">
+        {photos.map((photo, idx) => (
+          <div class="lg:w-1/3 md:w-1/2 w-full p-4">
+            <CldImage src={photo.public_id} width={400} height={400} alt="Uploaded photo" class="rounded shadow-md"  />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p class="text-xl p-4">
+        No photos to list. Please make sure that you have uploaded some images
+        using this app.
+      </p>
+    )}
+  </div>
+</Layout>

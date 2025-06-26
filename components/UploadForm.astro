@@ -1,0 +1,85 @@
+
+<form
+    class="flex flex-col bg-white rounded-lg shadow p-6 mb-6"
+    id="upload-form"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <label class="form-control w-full max-w-xs" for="image">
+      <div class="label">
+        <span class="label-text">Pick a file</span>
+      </div>
+      <input
+        id="image"
+        class="file-input file-input-bordered w-full max-w-xs"
+        type="file"
+        name="image"
+        required
+      />
+    </label>
+    <button
+      type="submit"
+      class="btn btn-primary mt-4"
+    >
+      Upload
+    </button>
+  </form>
+
+  <p
+    id="upload-result"
+    class="hidden bg-green-100 p-2 rounded"
+  ></p>
+</div>
+
+<script>
+ const form = document.getElementById("upload-form") as HTMLFormElement;
+  const resultParagraph = document.getElementById("upload-result")!;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    resultParagraph.classList.add("hidden");
+    resultParagraph.textContent = '';
+    resultParagraph.classList.remove("bg-red-100");
+    resultParagraph.classList.add("bg-green-100");
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: form.method,
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const publicId = data.public_id;
+
+        resultParagraph.textContent = `Upload successful! Public ID: ${publicId}`;
+        resultParagraph.classList.remove("hidden");
+
+      } else {
+        console.error("Failed to upload image. Status:", response.status);
+        const errorText = await response.text();
+        resultParagraph.textContent = `Upload failed: ${response.status} ${response.statusText}. ${errorText || ''}`;
+        resultParagraph.classList.remove("hidden");
+        resultParagraph.classList.remove("bg-green-100");
+        resultParagraph.classList.add("bg-red-100");
+      }
+    } catch (error) {
+      console.error("An error occurred during upload:", error);
+
+      let errorMessage = "An unexpected error occurred during upload.";
+
+      if (error instanceof Error) {
+        errorMessage = `An error occurred: ${error.message}`;
+      } else if (typeof error === 'string') {
+        errorMessage = `An error occurred: ${error}`;
+      }
+      
+      resultParagraph.textContent = errorMessage;
+      resultParagraph.classList.remove("hidden");
+      resultParagraph.classList.remove("bg-green-100");
+      resultParagraph.classList.add("bg-red-100");
+    }
+  });
+</script>

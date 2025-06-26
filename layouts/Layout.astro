@@ -1,0 +1,12 @@
+---
+import '../styles/global.css'
+import Navbar from '../components/Navbar.astro'
+---
+<html lang="en">
+  <body>
+    <Navbar />
+    <main class="bg-gray-200 container mx-auto p-8 rounded-lg shadow-2xl">
+      <slot />
+    </main>
+  </body>
+</html>
