@@ -1,7 +1,8 @@
 ---
 import { CldUploadWidget } from 'astro-cloudinary';
 ---
-<CldUploadWidget uploadPreset={process.env.PUBLIC_CLOUDINARY_UPLOAD_PRESET} id="upload">
+<CldUploadWidget uploadPreset={process.env.PUBLIC_CLOUDINARY_UPLOAD_PRESET} id="upload" options={{
+  sources: ['local', 'url']}}>
   <button class="btn btn-primary">Upload</button>
 </CldUploadWidget>
 

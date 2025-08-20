@@ -9,10 +9,11 @@ export const POST: APIRoute = async ({ request }) => {
   const buffer = Buffer.from(arrayBuffer);
 
   const result: UploadApiResponse = await new Promise((resolve, reject) => {
+    console.log(import.meta.env.CLOUDINARY_TAG);
     cloudinary.uploader
       .upload_stream(
         {
-          tags: [process.env.CLOUDINARY_TAG],
+          tags: [import.meta.env.CLOUDINARY_TAG],
         },
         function (error, result) {
           if (error || !result) {

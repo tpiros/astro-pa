@@ -1,8 +1,6 @@
 ---
 import cloudinary from '../../utils/cloudinary'
 import Layout from '../../layouts/Layout.astro';
-import type { ResourceApiOptions } from 'cloudinary';
-import type { ResourceApiResponse } from 'cloudinary';
 import { CldImage } from 'astro-cloudinary';
 
 const tag = import.meta.env.CLOUDINARY_TAG;
@@ -53,9 +51,9 @@ if (tag) {
 
     {photos.length > 0 ? (
       <div class="flex flex-wrap -mx-4">
-        {photos.map((photo, idx) => (
+        {photos.map((photo) => (
           <div class="lg:w-1/3 md:w-1/2 w-full p-4">
-            <CldImage src={photo.public_id} width={400} height={400} alt="Uploaded photo" class="rounded shadow-md"  />
+            <CldImage src={photo.public_id} width={400} height={400} crop={'crop'} radius={50} alt="Uploaded photo" class="shadow-md"/>
           </div>
         ))}
       </div>
